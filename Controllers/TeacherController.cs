@@ -15,11 +15,11 @@ namespace SchoolProject.Controllers
             return View();
         }
 
-        // GET: Teacher/List
-        public ActionResult List()
+        // GET: Teacher/List/{SearchKey}
+        public ActionResult List(string SearchKey)
         {
             TeacherDataController controller = new TeacherDataController();
-            IEnumerable<Teacher> Teachers = controller.ListTeachers();
+            IEnumerable<Teacher> Teachers = controller.ListTeachers(SearchKey);
             return View(Teachers);
         }
 

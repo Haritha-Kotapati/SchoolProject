@@ -11,20 +11,21 @@ namespace SchoolProject.Controllers
 {
     public class TeacherDataController : ApiController
     {
-        //The database context class which llows us to access our MySQL Database.
+        //The database context class which allows us to access our MySQL Database.
         private SchoolDbContext School = new SchoolDbContext();
 
         ///This Controller will access the teachers table of our School database.
         ///<summary>
         ///Returns a list of Teachers in the system.
         /// </summary>
+        /// <param id="teacher">some kind of text to seacrh against the teacher name</param>
         /// <example>GET api/TeacherData/ListTeachers</example>
         /// <returns>
         /// A list of teachers (first names and last names) 
         /// </returns>
         /// 
         [HttpGet]
-        public IEnumerable<Teacher> ListTeachers()
+        public IEnumerable<Teacher> ListTeachers(string SearchKey)
         {
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -36,8 +37,9 @@ namespace SchoolProject.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Teachers";
-
+            //cmd.CommandText = "Select * from Teachers";
+            cmd.CommandText = "Select * from Teachers where teacherfname like '%" + SearchKey + "%'";
+           
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -60,8 +62,8 @@ namespace SchoolProject.Controllers
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-               // NewTeacher.HireDate = HireDate;
-               // NewTeacher.Salary = Salary;
+                NewTeacher.HireDate = HireDate;
+                NewTeacher.Salary = Salary;
 
                 //Add the Teacher Name to the list
                 Teachers.Add(NewTeacher);
@@ -77,7 +79,7 @@ namespace SchoolProject.Controllers
 
         [HttpGet]
         /// <example>GET api/TeacherData/FindTeacher/4</example>
-        public Teacher FindTeacher(int id)
+        public Teacher FindTeacher(int teacherid)
         {
             Teacher NewTeacher = new Teacher();
 
@@ -90,8 +92,11 @@ namespace SchoolProject.Controllers
             //Establish a new command (query) for our database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            //SQL QUERY
-            cmd.CommandText = "Select * from Teachers where teacherid = " + id;
+            //Create SQL QUERY
+            string query = "Select * from Teachers where teacherid =@id ";
+            cmd.CommandText = query ;
+            cmd.Parameters.AddWithValue("@id", teacherid);
+            cmd.Prepare();
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();

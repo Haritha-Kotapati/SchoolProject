@@ -6,10 +6,16 @@
 <h2>List</h2>
 <p>This page would be showing the information about all teachers</p>
 
+<form method="GET" >
+    <h3>Search by using the teachers first name</h3>
+    <input type="text" name="SearchKey"/>
+    <input type="submit" value="Search"/>
+</form>
+
 @foreach (var teacher in Model) { 
 
     <div><a href="/Teacher/Show/@teacher.TeacherId">
     @teacher.TeacherFname @teacher.TeacherLname
     </a></div>
-    <p>@teacher.TeacherId @teacher.EmployeeNumber</p>
+    
 }
