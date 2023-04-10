@@ -55,16 +55,16 @@ namespace SchoolProject.Controllers
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string TeacherLname = (string)ResultSet["teacherlname"];
                 string EmployeeNumber  =  (string)ResultSet["employeenumber"];
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                decimal Salary = (decimal)ResultSet["salary"];
+               // DateTime HireDate = (DateTime)ResultSet["hiredate"];
+               // decimal Salary = (decimal)ResultSet["salary"];
 
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = HireDate;
-                NewTeacher.Salary = Salary;
+              //  NewTeacher.HireDate = HireDate;
+              //  NewTeacher.Salary = Salary;
 
                 //Add the Teacher Name to the list
                 Teachers.Add(NewTeacher);
@@ -149,6 +149,33 @@ namespace SchoolProject.Controllers
             string query = "Delete from Teachers where teacherid=@id";
             cmd.CommandText = query;
             cmd.Parameters.AddWithValue("@id", teacherid);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        [HttpPost]
+        public void AddTeacher([FromBody]Teacher NewTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary  ) " +
+                "values (@TeacherFname, @TeacherLname, @EmployeeNumber, CURRENT_DATE(), @Salary)";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+           cmd.Parameters.AddWithValue("CURRENT_DATE()", NewTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();
