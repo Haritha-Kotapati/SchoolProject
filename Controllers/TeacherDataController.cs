@@ -38,8 +38,9 @@ namespace SchoolProject.Controllers
 
             //SQL QUERY
             //cmd.CommandText = "Select * from Teachers";
-            cmd.CommandText = "Select * from Teachers where teacherfname like '%" + SearchKey + "%'";
-           
+            cmd.CommandText = "Select * from Teachers where teacherfname like '%" + SearchKey + "%' or teacherlname like '%" + SearchKey + "%' ";
+            // Select* from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)
+
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -121,6 +122,40 @@ namespace SchoolProject.Controllers
             return NewTeacher;
         }
 
+        
+
+        /// <summary>
+        /// Deletes a profile of teacher into the system
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example>POST : /api/TeacherData/DeleteTeacher/5</example>
+        /// <returns>
+        /// </returns>
+        /// 
+        [HttpPost]
+
+        public void DeleteTeacher(int teacherid)
+
+       {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Delete from Teachers where teacherid=@id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", teacherid);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+      
     }
 
 }

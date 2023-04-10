@@ -4,8 +4,12 @@
 }
 
 <h2>Show Teacher</h2>
-<a class="navlink" href="/Teacher/List">Back to Teachers</a>
-<div>
+
+<div class="container-show">
+    <nav>
+        <a class="navlink" href="/Teacher/List">Back to Teachers</a>
+        <a class="dellink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+    </nav>
     <p>@Model.TeacherFname @Model.TeacherLname</p>
     <h3>His employee number is @Model.EmployeeNumber and hired on @Model.HireDate</h3>
     <h2>Salary : @Model.Salary</h2>

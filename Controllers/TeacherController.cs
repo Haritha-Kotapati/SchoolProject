@@ -31,5 +31,21 @@ namespace SchoolProject.Controllers
            
             return View(NewTeacher);
         }
+
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher NewTeacher = controller.FindTeacher(id);
+
+            return View(NewTeacher);
+        }
+
+        //POST: /Teacher/Delete/{id}
+        public ActionResult Delete(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            controller.DeleteTeacher(id);
+            return RedirectToAction("List");
+        }
     }
 }
