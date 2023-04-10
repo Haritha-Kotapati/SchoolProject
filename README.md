@@ -5,4 +5,4 @@ It involves the 'read' functionality built on the Teachers mySQL table using Web
 This lists the teachers from the data and upon clicking a teacher, shows up the details of the teacher.
 
 Additional Initiative:
-It includes the search functionality of teacher's first name from the list to filter.
+It includes the search functionality of teacher's first name or last name or name from the list to filter.
