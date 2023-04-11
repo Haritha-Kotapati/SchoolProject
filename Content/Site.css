@@ -22,18 +22,18 @@ nav{
 .navlink{
     float:left;
 }
-.dellink{
+/*.dellink{
     color:#dd1111;
     float:right;
-}
-.delbutton {
+}*/
+/*.delbutton {
     display: block;
     margin: 0 auto;
     background-color: #dd1111;
     color: #fff;
     border: 2px solid #000;
     border-radius: 3px;
-}
+}*/
 .container-show{
     width:80%;
     margin:0 auto;

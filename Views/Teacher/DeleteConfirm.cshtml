@@ -6,14 +6,23 @@
 
 <div id="containershow">
     <nav>
-        <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Cancel</a>
+        <a class="btn btn-default" href="/Teacher/Show/@Model.TeacherId">Cancel</a>
     </nav>
     <h2>Are you sure you want to delete @Model.TeacherFname @Model.TeacherLname </h2>
     <p>This action cannot be undone.</p>
     <form method="post" action="/Teacher/Delete/@Model.TeacherId">
         
-        <button class="delbutton" href="">Confirm Delete</button>
+        <button class="btn btn-danger" href="">Confirm Delete</button>
     </form>
 </div>
 
-
+<style>
+    .delbutton {
+        display: block;
+        margin: 0 auto;
+        background-color: #dd1111;
+        color: #fff;
+        border: 2px solid #000;
+        border-radius: 3px;
+    }
+</style>

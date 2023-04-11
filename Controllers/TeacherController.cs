@@ -58,8 +58,7 @@ namespace SchoolProject.Controllers
         //POST : /Teacher/Create
         [HttpPost]
 
-        public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber,
-            DateTime HireDate, decimal Salary)
+        public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber, decimal Salary)
         {
             //Identify that this method is running
             //Identify the inputs provided from the form
@@ -69,17 +68,24 @@ namespace SchoolProject.Controllers
             Debug.WriteLine(TeacherLname);
             Debug.WriteLine(EmployeeNumber);
 
+            if(String.IsNullOrEmpty(TeacherFname) || String.IsNullOrEmpty(TeacherLname) ||
+                String.IsNullOrEmpty(EmployeeNumber) || Salary != 0)
+            {
+                return View();
+            }
+
             Teacher NewTeacher = new Teacher();
             NewTeacher.TeacherFname = TeacherFname;
             NewTeacher.TeacherLname = TeacherLname;
             NewTeacher.EmployeeNumber = EmployeeNumber;
-            NewTeacher.HireDate = HireDate;
             NewTeacher.Salary = Salary;
 
             TeacherDataController controller = new TeacherDataController();
             controller.AddTeacher(NewTeacher);
 
-            return RedirectToAction("List");
+           
+                return RedirectToAction("List");
+           
         }
     }
 }

@@ -174,7 +174,6 @@ namespace SchoolProject.Controllers
             cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
             cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
             cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
-           cmd.Parameters.AddWithValue("CURRENT_DATE()", NewTeacher.HireDate);
             cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
             cmd.Prepare();
 

@@ -7,25 +7,21 @@
 <form method="POST" action="/Teacher/Create">
     <div>
         <label for="AuthorFname">First Name:</label>
-        <input type="text" id="TeacherFname" name="TeacherFname" />
+        <input type="text" id="TeacherFname" name="TeacherFname" required />
     </div>
 
     <div>
         <label for="TeacherLname">Last Name:</label>
-        <input type="text" id="TeacherLname" name="TeacherLname" />
+        <input type="text" id="TeacherLname" name="TeacherLname" required />
     </div>
 
     <div>
         <label for="EmployeeNumber">Employee Number:</label>
-        <input type="text" id="EmployeeNumber" name="EmployeeNumber" />
-    </div>
-    <div>
-        <label for="HireDate"> Date of Hired:</label>
-        <input type="datetime" id="HireDate" name="HireDate"/>
+        <input type="text" id="EmployeeNumber" name="EmployeeNumber" required />
     </div>
     <div>
         <label for="Salary">Salary:</label>
-        <input type="text" id="Salary" name="Salary" />
+        <input type="number" value="0.00" step="0.01" id="Salary" name="Salary" min="0" />
     </div>
     <div>
         <input type="submit" value="Create Teacher" />
