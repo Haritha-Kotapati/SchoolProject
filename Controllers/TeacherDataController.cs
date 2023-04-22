@@ -78,8 +78,16 @@ namespace SchoolProject.Controllers
 
         }
 
+        /// <summary>
+        /// Finds a teacher from the database through an id. Non-deterministic.
+        /// </summary>
+        /// <param name="teacherid">Teacher Id</param>
+        /// <returns></returns>
+        /// /// <example>GET api/TeacherData/FindTeacher/4 -> {Teacher Object}</example>
+        /// 
         [HttpGet]
-        /// <example>GET api/TeacherData/FindTeacher/4</example>
+        [Route("api/TeacherData/FindTeacher/{teacherid}")]
+        
         public Teacher FindTeacher(int teacherid)
         {
             Teacher NewTeacher = new Teacher();
@@ -118,6 +126,7 @@ namespace SchoolProject.Controllers
                 NewTeacher.HireDate = HireDate;
                 NewTeacher.Salary = Salary;
             }
+            Conn.Close();
 
             return NewTeacher;
         }
@@ -156,6 +165,19 @@ namespace SchoolProject.Controllers
             Conn.Close();
         }
 
+        /// <summary>
+        /// Adds a Teaher to the database. Non-deterministic.
+        /// </summary>
+        /// <param name="NewTeacher">An object with fields that map to the columns of the author's table.</param>
+        /// <example>
+        /// POST api/Teacher DATA /REQUEST BODY
+        /// {
+        /// "TeacherFname": "Haritha",
+        /// "TeacherLname": "Kotapati",
+        /// "EmployeeNumber": "RTU787"
+        /// }
+        /// </example>
+
         [HttpPost]
         public void AddTeacher([FromBody]Teacher NewTeacher)
         {
@@ -181,6 +203,51 @@ namespace SchoolProject.Controllers
 
             Conn.Close();
         }
+
+        /// <summary>
+        /// Update a teacher in the system
+        /// </summary>
+        /// <param name="teacherid"></param>
+        /// <param name="UpdateTeacher"></param>
+        /// <example>
+        /// POST:api/teacherdata/updateteacher/105/mmmnff
+        /// POST DATA / FORM DATA / REQUEST BODY
+        /// {
+        /// teacherid: 5,
+        /// teacherfname: 'Hari',
+        /// teacherlname: 'tha'
+        /// }
+        /// 
+        /// curl http://localhost:57743/api/teacherdata/updateteacher/5 -H "Content-Type: application/json" -d @teacher.json
+        /// </example>
+        [HttpPost]
+        [Route("api/teacherdata/updateteacher/{id}")]
+        public void UpdateTeacher(int id, [FromBody] Teacher UpdateTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Connection = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Connection.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand Command = Connection.CreateCommand();
+
+            //SQL QUERY
+            string query = "update teachers set teacherfname=@TeacherFname, " +
+                            "teacherlname=@TeacherLname where teacherid=@id";
+            Command.CommandText = query;
+            Command.Parameters.AddWithValue("@TeacherFname", UpdateTeacher.TeacherFname);
+            Command.Parameters.AddWithValue("@TeacherLname", UpdateTeacher.TeacherLname);
+            Command.Parameters.AddWithValue("@id", id);
+            Command.Prepare();
+
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+        }
+
+        
       
     }
 

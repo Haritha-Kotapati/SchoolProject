@@ -83,9 +83,51 @@ namespace SchoolProject.Controllers
             TeacherDataController controller = new TeacherDataController();
             controller.AddTeacher(NewTeacher);
 
-           
-                return RedirectToAction("List");
-           
+            return RedirectToAction("List");
+        }
+
+        /// <summary>
+        /// Routes to a dynamically generated "Teacher Update" page. Gathers information from the database.
+        /// </summary>
+        /// <param name="id">Id of the Teacher</param>
+        /// <returns>A dynamic "Update Teacher" webpage which provides the current information of the author and the user for new information as part of a form.</returns>
+       /// <example>GET : /Teacher/Update/5</example>
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+            return View(SelectedTeacher);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="TeacherFname"></param>
+        /// <param name="TeacherLname"></param>
+        /// <param name="EmployeeNumber"></param>
+        /// <returns></returns>
+        ///<example>
+        //POST: /Teacher/Edit/{Teacherid}
+        ///FORM DATA /POST DATA / REQUEST BODY
+        /// {
+        ///     "TeacherFname" : "Haritha",
+        ///     "TeacherLname" : "Kotapati",
+        ///     "EmployeeNumber" : "ERU789"
+        ///}</example>
+
+        [HttpPost]
+        public ActionResult Update(int id, string TeacherFname, string TeacherLname, string EmployeeNumber)
+        {
+            Teacher updateTeacher = new Teacher();
+            updateTeacher.TeacherFname = TeacherFname;
+            updateTeacher.TeacherLname = TeacherLname;
+            updateTeacher.EmployeeNumber = EmployeeNumber;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, updateTeacher);
+
+            return RedirectToAction("show/" + id);
         }
     }
 }

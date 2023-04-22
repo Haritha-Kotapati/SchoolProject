@@ -1,0 +1,22 @@
+﻿@model SchoolProject.Models.Teacher
+
+@{
+    ViewBag.Title = "Update";
+}
+<nav class="navlink" href="/Teacher/Show/@Model.TeacherId">Back</nav>
+<h2>Update Teacher</h2>
+<form method="POST" action="/Teacher/Update/@Model.TeacherId">
+    <div>
+        <label>Teacher First Name</label>
+        <input type="text" value="@Model.TeacherFname" />
+    </div>
+
+    <div>
+        <label>Teacher Last Name</label>
+        <input type="text" value="@Model.TeacherLname" />
+    </div>
+
+    <div>
+        <input type="submit" value="Update Article" />
+    </div>
+</form>
